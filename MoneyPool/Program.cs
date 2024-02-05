@@ -47,7 +47,7 @@ public class Pool
             RoundsList.Add(new Rounds { Date = currentDate, Participant = participant });
             currentDate = currentDate.AddMonths(1);
         }
-        RoundsList = RoundsList.OrderBy(round => round.Next()).ToList();
+        RoundsList = RoundsList.OrderBy(round => random.Next()).ToList();
     }
 
     public void PrintResults()
@@ -93,6 +93,7 @@ public class Program
 
         string serializedData = moneyPool.Serialize();
         Console.WriteLine("\nSerialized Data: \n");
-        Console.WriteLine(serializedData);
+        Console.WriteLine(serializedData); 
+       
     }
 }
