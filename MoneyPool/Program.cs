@@ -37,4 +37,9 @@ public class Pool
         MonthlyAmount = monthlyAmount;
         RoundsList = new List<Rounds>();
     }
+    public void CalculateRounds()
+    {
+        Random random = new Random();
+
+    }
 }
