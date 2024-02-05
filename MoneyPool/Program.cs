@@ -31,4 +31,10 @@ public class Pool
 
     public int MonthlyAmount { get; set; }
 
+    public Pool(List<Participants> participantsList, int monthlyAmount)
+    {
+        ParticipantsList = participantsList;
+        MonthlyAmount = monthlyAmount;
+        RoundsList = new List<Rounds>();
+    }
 }
