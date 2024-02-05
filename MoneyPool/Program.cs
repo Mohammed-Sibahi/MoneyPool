@@ -61,5 +61,9 @@ public class Pool
         }
     }
 
+    public string Serialize()
+    {
+        return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
+    }
 
 }
