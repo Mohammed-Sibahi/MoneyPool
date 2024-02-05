@@ -67,3 +67,32 @@ public class Pool
     }
 
 }
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("Enter the number of pool participants:");
+        int Number = int.Parse(Console.ReadLine());
+
+        List<Participants> participantsList = new List<Participants>();
+        
+        for(int i = 1; i <= Number; i++)
+        {
+            Console.WriteLine($"Enter the name of participant {i}");
+            string participantName = Console.ReadLine();
+            participantsList.Add(new Participants(participantName, i));
+        }
+
+        Console.WriteLine("Enter the monthly amount for the pool:");
+        int monthlyAmount = int.Parse(Console.ReadLine());
+
+        Pool moneyPool = new Pool(participantsList, monthlyAmount);
+        moneyPool.CalculateRounds();
+        moneyPool.PrintResults();
+
+        string serializedData = moneyPool.Serialize();
+        Console.WriteLine("\nSerialized Data: \n");
+        Console.WriteLine(serializedData);
+    }
+}
