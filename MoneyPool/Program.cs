@@ -26,5 +26,9 @@ public class Rounds
 
 public class Pool
 {
+    public List<Participants> ParticipantsList { get; set; }
+    public List<Rounds> RoundsList { get; set; }
+
+    public int MonthlyAmount { get; set; }
 
 }
