@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Security.Cryptography.X509Certificates;
 
 
 public class Participants
@@ -40,6 +41,25 @@ public class Pool
     public void CalculateRounds()
     {
         Random random = new Random();
-
+        DateTime currentDate = new DateTime(2024, 02, 01);
+        foreach(var participant in ParticipantsList)
+        {
+            RoundsList.Add(new Rounds { Date = currentDate, Participant = participant });
+            currentDate = currentDate.AddMonths(1);
+        }
+        RoundsList = RoundsList.OrderBy(round => round.Next()).ToList();
     }
+
+    public void PrintResults()
+    {
+        Console.WriteLine($"Total amount for each participant: AED{ParticipantsList.Count * MonthlyAmount}");
+        Console.WriteLine("Participants orderd by month (rounds): ");
+
+        foreach(var round in RoundsList)
+        {
+            Console.WriteLine($"{round.Date:MMM d}: {round.Participant.Name}");
+        }
+    }
+
+
 }
