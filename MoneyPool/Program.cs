@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Security.Cryptography.X509Certificates;
-
 
 public class Participants
 {
@@ -22,7 +18,7 @@ public class Participants
 public class Rounds
 {
     public DateTime Date { get; set; }
-    public Participants? Participant { get; set; }
+    public Participants Participant { get; set; }
 }
 
 public class Pool
@@ -38,24 +34,27 @@ public class Pool
         MonthlyAmount = monthlyAmount;
         RoundsList = new List<Rounds>();
     }
+
     public void CalculateRounds()
     {
         Random random = new Random();
-        DateTime currentDate = new DateTime(2024, 02, 01);
-        foreach(var participant in ParticipantsList)
+        DateTime currentDate = new DateTime(2024, 2, 1);
+
+        List<Participants> shuffledParticipants = ParticipantsList.OrderBy(_ => random.Next()).ToList();
+
+        foreach (var participant in shuffledParticipants)
         {
             RoundsList.Add(new Rounds { Date = currentDate, Participant = participant });
             currentDate = currentDate.AddMonths(1);
         }
-        RoundsList = RoundsList.OrderBy(round => random.Next()).ToList();
     }
 
     public void PrintResults()
     {
         Console.WriteLine($"Total amount for each participant: AED{ParticipantsList.Count * MonthlyAmount}");
-        Console.WriteLine("Participants orderd by month (rounds): ");
+        Console.WriteLine("Participants ordered by month (rounds): ");
 
-        foreach(var round in RoundsList)
+        foreach (var round in RoundsList)
         {
             Console.WriteLine($"{round.Date:MMM d}: {round.Participant.Name}");
         }
@@ -65,7 +64,6 @@ public class Pool
     {
         return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
     }
-
 }
 
 public class Program
@@ -76,8 +74,8 @@ public class Program
         int Number = int.Parse(Console.ReadLine());
 
         List<Participants> participantsList = new List<Participants>();
-        
-        for(int i = 1; i <= Number; i++)
+
+        for (int i = 1; i <= Number; i++)
         {
             Console.WriteLine($"Enter the name of participant {i}");
             string participantName = Console.ReadLine();
@@ -93,7 +91,6 @@ public class Program
 
         string serializedData = moneyPool.Serialize();
         Console.WriteLine("\nSerialized Data: \n");
-        Console.WriteLine(serializedData); 
-       
+        Console.WriteLine(serializedData);
     }
 }
